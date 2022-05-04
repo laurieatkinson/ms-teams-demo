@@ -1,0 +1,20 @@
+{
+  "@type": "message",
+  "@context": "http://schema.org/extensions",
+  "themeColor": "0076D7",
+  "summary": "A question has been posted",
+  "sections": [
+    {
+      "activityImage": "https://7bc9-2601-283-4101-2ce0-fd73-3d2-fd2c-b179.ngrok.io/api/image/{{questionId}}?v={{answerId}}",
+      "activityTitle": "Question Regarding Document Submission",
+      "activitySubtitle": "Please respond in the Tab if you are able to assist",
+      "facts": [
+        {
+          "name": "Question",
+          "value": "{{questionText}}"
+        }
+      ],
+      "markdown": true
+    }
+  ]
+}

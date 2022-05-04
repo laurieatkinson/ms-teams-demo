@@ -1,0 +1,115 @@
+{
+  "@type": "MessageCard",
+  "@context": "http://schema.org/extensions",
+  "themeColor": "0076D7",
+  "summary": "A question has been posted",
+  "sections": [
+    {
+      "activityImage": "https://7bc9-2601-283-4101-2ce0-fd73-3d2-fd2c-b179.ngrok.io/api/image/{{answerId}}",
+      "activityTitle": "Question Regarding Document Submission",
+      "activitySubtitle": "Please respond if you are able to assist",
+      "facts": [
+        {
+          "name": "Question",
+          "value": "{{questionText}}"
+        },
+        {
+          "name": "Assigned to",
+          "value": "Unassigned"
+        },
+        {
+          "name": "Due date",
+          "value": "{{dueDate}}"
+        },
+        {
+          "name": "Status",
+          "value": "Not started"
+        }
+      ],
+      "markdown": true
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "ActionCard",
+      "name": "Submit an answer",
+      "inputs": [
+        {
+          "@type": "TextInput",
+          "id": "answer",
+          "isMultiline": true,
+          "title": "Add your answer here"
+        }
+      ],
+      "actions": [
+        {
+          "@type": "HttpPOST",
+          "name": "Add comment",
+          "target": "https://7bc9-2601-283-4101-2ce0-fd73-3d2-fd2c-b179.ngrok.io/api/answer/{{documentId}}",
+          "body": "{{answer.value}}"
+        }
+      ]
+    },
+    {
+      "@type": "ActionCard",
+      "name": "Set due date",
+      "inputs": [
+        {
+          "@type": "DateInput",
+          "id": "dueDate",
+          "title": "Enter a due date for this task"
+        }
+      ],
+      "actions": [
+        {
+          "@type": "HttpPOST",
+          "name": "Save",
+          "target": "https://docs.microsoft.com/outlook/actionable-messages"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "View Document",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://microsoft-my.sharepoint.com/personal/laurieat_microsoft_com/_layouts/15/Doc.aspx?sourcedoc="
+        }
+      ]
+    },
+    {
+      "@type": "ActionCard",
+      "name": "Change status",
+      "inputs": [
+        {
+          "@type": "MultichoiceInput",
+          "id": "list",
+          "title": "Select a status",
+          "isMultiSelect": "false",
+          "choices": [
+            {
+              "display": "In Progress",
+              "value": "1"
+            },
+            {
+              "display": "Active",
+              "value": "2"
+            },
+            {
+              "display": "Closed",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "@type": "HttpPOST",
+          "name": "Save",
+          "target": "https://docs.microsoft.com/outlook/actionable-messages"
+        }
+      ]
+    }
+  ]
+}

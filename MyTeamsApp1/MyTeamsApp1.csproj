@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>84fa496b-8eb0-4a79-bde7-fbb188e2e6a5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\Tab.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\Tab.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\site.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectCapability Include="TeamsFx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.10.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.Fast.Components.FluentUI" Version="1.0.0" />
+    <PackageReference Include="Microsoft.TeamsFx.SimpleAuth" Version="0.1.1" />  
+    <PackageReference Include="Microsoft.TeamsFx" Version="0.3.0-rc" />
+  </ItemGroup>
+
+</Project>

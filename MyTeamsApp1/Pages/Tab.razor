@@ -1,0 +1,59 @@
+﻿@page "/"
+@page "/tab"
+@using MyTeamsApp1.Components;
+@using System.Net.Http.Json
+@inject TeamsFx teamsfx
+@inject TeamsUserCredential teamsUserCredential
+@inject MicrosoftTeams MicrosoftTeams
+@*@inject HttpClient httpClient*@
+
+<div>
+    @if (userName != null)
+    {
+        <QuestionListComponent UserDisplayName="@userName" />   
+    }
+</div>
+
+@code {
+    string userName;
+    bool isInTeams;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if(firstRender)
+        {
+            isInTeams = await MicrosoftTeams.IsInTeams();
+
+            if (isInTeams)
+            { 
+                var user = await teamsUserCredential.GetUserInfoAsync();
+                userName = user.DisplayName;
+                var context = await MicrosoftTeams.GetTeamsContextAsync();
+                //var id = context.ChannelId;
+                StateHasChanged();
+                //var url = $"https://graph.microsoft.com/beta/subscriptions";
+                //var body = new {
+                //    ChangeType = "created",
+                //    NotificationUrl = "https://webhook.azurewebsites.net/api/resourceNotifications",
+                //    Resource = $"chats/{context.ChatId}/messages",
+                //    ExpirationDateTime = DateTime.Now.AddDays(1)
+                //};
+                //try
+                //{
+                //    var response = await httpClient.PostAsync(url, JsonContent.Create(body));
+                //    response.EnsureSuccessStatusCode();        
+                //} catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex);
+                //}
+            }
+        } else
+        {
+            userName = null;
+        }
+    }
+}
+
+

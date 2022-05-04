@@ -1,0 +1,63 @@
+﻿@inherits ComponentBase
+<style>
+    .hoverIndicator:hover {
+        background-color:#eeeeee;
+    }
+    fluent-data-grid, #detailsDiv {
+        width: 800px;
+        margin: 10px;
+        padding: 10px;
+        border-style: solid;
+        border-width: 1px;
+    }
+    fluent-button {
+        margin: 10px;
+    }
+</style>
+<div>
+    <FluentButton Appearance=Appearance.Filled @onclick="() => RefreshQuestions()">Refresh</FluentButton>
+    @if (Questions.Count > 0)
+    {
+        <FluentDataGrid id="questionGrid" RowsData=Questions ColumnDefinitions=ColumnDefinitions GridTemplateColumns="1fr 1fr 1fr">
+            <RowItemTemplate>
+                <FluentDataGridRow TItem=Question RowData="context"
+                    @onclick="() => SelectQuestion(context)"
+                    @onkeydown=@((args) => {if (args.Key == "Enter" || args.Key == " ") { SelectQuestion(context);}})
+                    style="@(SelectedRow == context ? "background-color:lightgray;" : "")">
+                    <FluentDataGridCell GridColumn=1>
+                        @context.Comment
+                    </FluentDataGridCell>
+                    <FluentDataGridCell GridColumn=2>
+                        @context.AnswerStatus
+                    </FluentDataGridCell>
+                    <FluentDataGridCell GridColumn=3>
+                        <a href="@context.DocumentUrl">Related document</a>
+                    </FluentDataGridCell>
+                </FluentDataGridRow>
+            </RowItemTemplate>
+        </FluentDataGrid>
+        <div id="detailsDiv">
+            <h4>Selected Question</h4>
+            @if (SelectedRow != null)
+            {
+                <p>@SelectedRow.Comment</p>
+                <p><a href="@SelectedRow.DocumentUrl">Related document</a></p>
+                <p><label>Answer:</label></p>
+                @if (SelectedRow.Answer.AnswerId == Guid.Empty)
+                {
+                    <FluentTextArea style="width: 100%" @bind-Value=@SelectedRow.Answer.Comment></FluentTextArea><br/>
+                    <FluentButton Appearance=Appearance.Filled @onclick="() => OnSaveAnswer()">Send Answer</FluentButton>
+                } else
+                {
+                    <p>@SelectedRow.Answer.Comment</p>
+                    <p><i>Answered by - @SelectedRow.Answer.UserName</i></p>
+                }
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string UserName { get; set; }
+}

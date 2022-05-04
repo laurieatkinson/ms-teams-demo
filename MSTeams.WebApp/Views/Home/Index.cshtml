@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Demo Page</h1>
+    <form asp-action="Index" asp-controller="Home" method="post">
+        <div class="form-group">
+            <label class="text-dark" for="comment">My question</label>
+            <input class="form-control" name="comment">
+        </div>
+        <div class="col-lg-3 text-center">
+            <button type="submit" class="btn btn-block btn-dark">Submit question</button>
+        </div>
+    </form>
+</div>
